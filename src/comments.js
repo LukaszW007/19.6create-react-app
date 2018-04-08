@@ -25,7 +25,7 @@ function comments(state = initialState, action) {
         case EDIT_COMMENT:
             const editedComment = state.comments.filter(comment => {
                 if (comment.id === action.id) {
-                    return{
+                    return {
                         id: comment.id,
                         text: action.text,
                         votes: comment.votes
@@ -33,33 +33,21 @@ function comments(state = initialState, action) {
                 }
             });
             return Object.assign({}, state, {
-                comments: state.comments.splice(action.id,1,editedComment)
+                comments: state.comments.splice(action.id, 1, editedComment)
             });
         case THUMB_UP_COMMENT:
-            const thumbUpComment = state.comments.filter(comment => {
-                if (comment.id === action.id) {
-                    return{
-                        id: action.id,
-                        text: comment.text,
-                        votes: comment.votes + 1
-                    };
+            return state.comments.map(comment => {
+                if(comment.id === action.id) {
+                    return {...comment, votes: comment.votes + 1}
                 }
-            });
-            return Object.assign({}, state, {
-                comments: state.comments.splice(action.id,1,thumbUpComment)
+                return comment;
             });
         case THUMB_DOWN_COMMENT:
-            const thumbDownComment = state.comments.filter(comment => {
-                if (comment.id === action.id) {
-                    return{
-                        id: action.id,
-                        text: comment.text,
-                        votes: comment.votes + 1
-                    };
+            return state.comments.map(comment => {
+                if(comment.id === action.id) {
+                    return {...comment, votes: comment.votes - 1}
                 }
-            });
-            return Object.assign({}, state, {
-                comments: state.comments.splice(action.id,1,thumbDownComment)
+                return comment;
             });
         default:
             return state;
