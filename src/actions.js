@@ -17,7 +17,7 @@ export function addComment (text) {
     return{
         type: ADD_COMMENT,
         text,
-        id: uuid.v4
+        id: uuid.v4()
     }
 }
 
